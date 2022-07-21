@@ -764,4 +764,4 @@ async def get_map_scores(set_id:int=0, mode='std', mods='vn'):
     set_info = requests.get(f"https://kitsu.moe/api/s/%s", set_id)
     print(set_info.json())
 
-    return await render_template('beatmaps/beatmap.html', title=title, mode=mode, mods=mods)
+    return await render_template('beatmaps/beatmap.html', set_info=set_info, mode=mode, mods=mods)
