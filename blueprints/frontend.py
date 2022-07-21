@@ -677,7 +677,7 @@ async def get_player_score(score_id:int=0, mods:str = "vn"):
         map_info['diff'] = map_info['diff']
     score['grade'] = score['grade'].upper()
     user['country'] = user['country'].upper()
-    user['banner'] = f"url(https://abypass.wtf/banners/{user['id']});"
+    user['banner'] = f"url(https://tenpercent.pw/banners/{user['id']});"
     map_info['banner_link'] = f"url('https://assets.ppy.sh/beatmaps/{map_info['set_id']}/covers/cover.jpg');"
     score['acc'] = f"{round(float(score['acc']), 2)}%"
     score['pp'] = round(float(score['pp']), 2)
@@ -735,7 +735,7 @@ async def get_player_score(score_id:int=0, mods:str = "vn"):
             group_list.append(["✓", "#28a40c"])
 
     #Get status
-    async with glob.http.get(f"https://api.abypass.wtf/get_player_status?id={user['id']}") as resp:
+    async with glob.http.get(f"https://api.tenpercent.pw/get_player_status?id={user['id']}") as resp:
         resp = await resp.json()
         if resp['player_status']['online'] == True:
             player_status = ["#38c714", "Online"]
@@ -751,10 +751,11 @@ async def get_player_score(score_id:int=0, mods:str = "vn"):
 
 #Beatmaps routes
 @frontend.route('/b/<map_id>')
-@frontend.route('/s/<map_id>')
-@frontend.route('/beatmaps/<map_id>')
-async def beatmap_page(map_id:int=None):
-    if map_id == None or map_id.isdigit() == False:
-        return render_template('404.html')
+@frontend.route('/b/<map_id>/<mode>/<mods>')
+async def (map_id:int=0, mode='std', mods='vn'):
+    if map_id == 0:
+        return await flash('error', "This map does not exist!", "home")
+    if mods.lower() not in ["vn", "rx", "ap"]:
+        return await flash('error', "Valid mods are vn, rx, and ap!", "home")
 
-    return await render_template('beatmaps/beatmap.html')
+    return await render_template('beatmaps/beatmap.html', mode=mode, mods=mods)
