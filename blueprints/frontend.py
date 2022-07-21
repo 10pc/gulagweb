@@ -761,7 +761,7 @@ async def get_map_scores(set_id:int=0, mode='std', mods='vn'):
     if mode.lower() not in ["std", "taiko", "catch", "mania"]:
         return await flash('error', "Valid modes are std, taiko, mania, and catch!", "home")
 
-    title = await glob.http.get(f"https://kitsu.moe/api/s/%s", set_id)
-    print(title.json())
+    set_info = requests.get(f"https://kitsu.moe/api/s/%s", set_id)
+    print(set_info.json())
 
     return await render_template('beatmaps/beatmap.html', title=title, mode=mode, mods=mods)
