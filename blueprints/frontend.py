@@ -6,6 +6,7 @@ import bcrypt
 import hashlib
 import os
 import time
+import requests
 
 from cmyui.logging import Ansi
 from cmyui.logging import log
@@ -750,14 +751,17 @@ async def get_player_score(score_id:int=0, mods:str = "vn"):
                                 player_status=player_status, mode_mods=mods)
 
 #Beatmaps routes
-@frontend.route('/b/<map_id>')
-@frontend.route('/b/<map_id>/<mode>/<mods>')
+@frontend.route('/b/<set_id>')
+@frontend.route('/b/<set_id>/<mode>/<mods>')
 async def get_map_scores(map_id:int=0, mode='std', mods='vn'):
-    if map_id == 0:
+    if set_id == 0:
         return await flash('error', "This map does not exist!", "home")
     if mods.lower() not in ["vn", "rx", "ap"]:
         return await flash('error', "Valid mods are vn, rx, and ap!", "home")
     if mode.lower() not in ["std", "taiko", "catch", "mania"]:
         return await flash('error', "Valid modes are std, taiko, mania, and catch!", "home")
 
-    return await render_template('beatmaps/beatmap.html', map_id=map_id, mode=mode, mods=mods)
+    title = await glob.http.get(f"https://kitsu.moe/api/s/%s", set_id)
+    print(title.json())
+
+    return await render_template('beatmaps/beatmap.html', title=title, mode=mode, mods=mods)
