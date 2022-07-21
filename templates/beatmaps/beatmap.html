@@ -11,7 +11,7 @@
     var map_id = "{{ id }}";
     var domain = "{{ domain() }}";
 
-    fetch("https://api.chimu.moe/v1/set/{{ id }}")
+    fetch("https://kitsu.moe/api/s/{{ id }}")
     .then(function(response){
       return response.json();
     })
