@@ -757,5 +757,7 @@ async def get_map_scores(map_id:int=0, mode='std', mods='vn'):
         return await flash('error', "This map does not exist!", "home")
     if mods.lower() not in ["vn", "rx", "ap"]:
         return await flash('error', "Valid mods are vn, rx, and ap!", "home")
+    if mode.lower() not in ["std", "taiko", "catch", "mania"]:
+        return await flash('error', "Valid modes are std, taiko, mania, and catch!", "home")
 
-    return await render_template('beatmaps/beatmap.html', mode=mode, mods=mods)
+    return await render_template('beatmaps/beatmap.html', map_id=map_id, mode=mode, mods=mods)
