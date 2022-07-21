@@ -10,6 +10,15 @@
     var mods = "{{ mods }}";
     var map_id = "{{ id }}";
     var domain = "{{ domain() }}";
+
+    fetch("https://api.chimu.moe/v1/set/{{ id }}")
+    .then(function(response){
+      return response.json();
+    })
+    .then(function(data){
+      console.log(data[0].title)
+      document.getElementById('title').innerHTML=data[0].Title
+    })
 </script>
 
 <link rel="stylesheet" href="/static/css/pages/beatmap.css">
@@ -21,19 +30,19 @@
         <div class="main-selector">
             <a class="mode-select" v-bind:class="{ 'active': mode === 'std' }"
             @click="LoadLeaderboard(sort, 'std', mods)">
-                <i class="mode-icon mode-osu"></i><span class="modetext"> osu!</span>
+                <i class="mode-icon mode-osu"></i>
             </a>
             <a class="mode-select" v-bind:class="{ 'active': mode === 'taiko', 'disabled': mods === 'ap' }"
             @click="LoadLeaderboard(sort, 'taiko', mods)">
-                <i class="mode-icon mode-taiko"></i><span class="modetext"> osu!taiko</span>
+                <i class="mode-icon mode-taiko"></i>
             </a>
             <a class="mode-select" v-bind:class="{ 'active': mode === 'catch', 'disabled': mods === 'ap' }"
             @click="LoadLeaderboard(sort, 'catch', mods)">
-                <i class="mode-icon mode-catch"></i><span class="modetext"> osu!catch</span>
+                <i class="mode-icon mode-catch"></i>
             </a>
             <a class="mode-select" v-bind:class="{ 'active': mode === 'mania', 'disabled': mods === 'ap' || mods === 'rx' }"
             @click="LoadLeaderboard(sort, 'mania', mods)">
-                <i class="mode-icon mode-mania"></i><span class="modetext"> osu!mania</span>
+                <i class="mode-icon mode-mania"></i>
             </a>
         </div>
         <div class="banner-text">Map Info</div>
