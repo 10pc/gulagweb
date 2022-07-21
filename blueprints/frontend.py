@@ -752,7 +752,7 @@ async def get_player_score(score_id:int=0, mods:str = "vn"):
 #Beatmaps routes
 @frontend.route('/b/<map_id>')
 @frontend.route('/b/<map_id>/<mode>/<mods>')
-async def (map_id:int=0, mode='std', mods='vn'):
+async def get_map_scores(map_id:int=0, mode='std', mods='vn'):
     if map_id == 0:
         return await flash('error', "This map does not exist!", "home")
     if mods.lower() not in ["vn", "rx", "ap"]:
